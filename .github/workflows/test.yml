@@ -19,3 +19,5 @@ jobs:
           pip install pytest
       - name: Test with pytest
         run: pytest test.py
+      - name: Test with pytest 22
+        run: pytest test.py<
