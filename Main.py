@@ -1,3 +1,5 @@
 import numpy as np
 
-np.array([])
+
+def run():
+    np.array([])
