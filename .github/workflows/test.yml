@@ -22,21 +22,58 @@ jobs:
       - name: Test with pytest
         run: pytest test.py
 
-  dependency:
-    needs: test_methods
-    runs-on: windows-latest
+  build:
+    name: Build distribution 📦
+    runs-on: ubuntu-latest
+    needs: test-methods
+
     steps:
-      - uses: actions/checkout@v3
-      - name: Set up Python 3.11
-        uses: actions/setup-python@v3
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v4
         with:
-          python-version: '3.12'
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -e .
-          python -m pip install pytest
-      - name: Test with pytest
-        run: pytest test.py
-      - name: Test with pytest
-        run: pytest test.py
+          python-version: "3.12"
+      - name: Install pypa/build
+        run: >-
+          python3 -m
+          pip install
+          build
+          --user
+
+      - name: Extract tag name
+        id: tag
+        run: echo ::set-output name=TAG_NAME::$(echo $GITHUB_REF | cut -d / -f 3)
+          - name: Update version in setup.cfg
+            run: >-
+              sed -i "s/{{VERSION_PLACEHOLDER}}/${{ steps.tag.outputs.TAG_NAME }}/g" setup.cfg
+
+      - name: Build a binary wheel and a source tarball
+        run: python3 -m build
+      - name: Store the distribution packages
+        uses: actions/upload-artifact@v3
+        with:
+          name: python-package-distributions
+          path: dist/
+
+  publish-to-testpypi:
+    needs: build
+    name: Publish Python 🐍 distribution 📦 to TestPyPI
+    runs-on: ubuntu-latest
+
+    environment:
+      name: testpypi
+      url: https://test.pypi.org/p/GHEtool
+
+    permissions:
+      id-token: { { TESTPYPI } }  # IMPORTANT: mandatory for trusted publishing
+
+    steps:
+      - name: Download all the dists
+        uses: actions/download-artifact@v3
+        with:
+          name: python-package-distributions
+          path: dist/
+      - name: Publish distribution 📦 to TestPyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          repository-url: https://test.pypi.org/legacy/
