@@ -18,14 +18,11 @@ jobs:
           echo ${{ steps.vars.outputs.tag }}
       - name: Set up Git
         run: git config --global user.email "wouter_peere@hotmail.com" && git config --global user.name "GitHub Actions"
-      - name: Set default branch.
-        run: git remote set-head origin --auto
-        shell: bash
       - name: Update version in version file and commit
         run: |
           echo "version: ${{ steps.vars.outputs.tag }}" > versions.txt
           git add versions.txt
           git commit -m "Update version to ${{ github.event.release.tag_name }}"
-          git push
+          git push origin HEAD:${{ github.event.release.target_commitish }}
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
