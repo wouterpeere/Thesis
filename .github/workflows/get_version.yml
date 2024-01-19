@@ -27,7 +27,7 @@ jobs:
       - name: Update version in version file and commit
         run: |
           echo "version: ${{ steps.vars.outputs.tag }}" > versions.txt
-          git add versions.txt
+          git add versions.txt 
           git commit -am "Update version to ${{ steps.vars.outputs.tag }}"
           git push origin HEAD:master
         env:
