@@ -26,6 +26,6 @@ jobs:
           echo "version: ${{ steps.vars.outputs.tag }}" > versions.txt
           git add versions.txt
           git commit -am "Update version to ${{ github.event.release.tag_name }}"
-          git push
+          git push origin HEAD:master
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
