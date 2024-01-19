@@ -6,7 +6,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Set output
         id: vars
         run: echo "tag=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
@@ -23,6 +23,6 @@ jobs:
           echo "version: ${{ steps.vars.outputs.tag }}" > versions.txt
           git add versions.txt
           git commit -m "Update version to ${{ github.event.release.tag_name }}"
-          git push origin HEAD:${{ github.event.release.target_commitish }}--force
+          git push
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
