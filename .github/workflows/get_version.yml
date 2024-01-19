@@ -2,6 +2,9 @@ on:
   push:
     tags:
       - 'v*.*.*'
+permissions:
+  contents: write
+  
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -22,7 +25,7 @@ jobs:
         run: |
           echo "version: ${{ steps.vars.outputs.tag }}" > versions.txt
           git add versions.txt
-          git commit -m "Update version to ${{ github.event.release.tag_name }}"
+          git commit -am "Update version to ${{ github.event.release.tag_name }}"
           git push
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
