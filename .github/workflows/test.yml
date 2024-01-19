@@ -65,16 +65,14 @@ jobs:
       name: testpypi
       url: https://test.pypi.org/p/GHEtool
 
-    permissions:
-      id-token: "pypi-AgENdGVzdC5weXBpLm9yZwIkYWE4OWY2MDEtNTFkZS00ZDYwLTg0MDgtNmRjODI5MDVhYjcxAAIPWzEsWyJnaGV0b29sIl1dAAIsWzIsWyJkZDVlZDhlMy0wNDFkLTQyNmYtOTk2ZS0xODc0YWVjY2VmOTQiXV0AAAYgn1Y27fjyYPiC8lBaVmyHuJpySEjzwdRLw9i1rKy9AiI"  # IMPORTANT: mandatory for trusted publishing
-
     steps:
       - name: Download all the dists
         uses: actions/download-artifact@v3
         with:
           name: python-package-distributions
           path: dist/
-      - name: Publish distribution 📦 to TestPyPI
-        uses: pypa/gh-action-pypi-publish@release/v1
+      - name: Publish distribution 📦 to PyPI
+        uses: pypa/gh-action-pypi-publish@master
         with:
           repository-url: https://test.pypi.org/legacy/
+          password: ${{ secrets.TESTPYPI }}
