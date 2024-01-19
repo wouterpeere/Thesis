@@ -1,31 +1,26 @@
-name: CI/CD Pipeline
+name: On release
 
 on:
-  - push
-
+  release:
+    types: [published]
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Set up Python
-        uses: actions/setup-python@v2
+      - name: Checkout repo
+        uses: actions/checkout@v3
         with:
-          python-version: 3.x
+          token: ${{ secrets.PAT }}
+          ref: main
 
-      - name: Install dependencies
-        run: pip install PyGithub
-
-      - name: Update version in setup.cfg
-        run: python update_version.py
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -e .
-          python -m pip install pytest
+      - name: Increment patch version
+        uses: yoichiro/gh-action-increment-value@v5
+        with:
+          target_directory: ''
+          target_file: 'versions.txt'
+          prefix: 'versionPatch:'
+          suffix: ']'
+          commit_message: '[skip ci] Increments the patch version to'
