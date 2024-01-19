@@ -9,7 +9,7 @@ permissions:
 
 jobs:
   create-tag:
-    name: Create dev tag
+    name: set tag
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -92,7 +92,8 @@ jobs:
           name: python-package-distributions
           path: dist/
       - name: Publish distribution 📦 to PyPI
-        uses: pypa/gh-action-pypi-publish@master
+        uses: pypa/gh-action-pypi-publish@release/v1
         with:
           repository-url: https://test.pypi.org/legacy/
+          user: __token_
           password: ${{ secrets.TESTPYPI }}
