@@ -66,7 +66,7 @@ jobs:
       url: https://test.pypi.org/p/GHEtool
 
     permissions:
-      id-token: ${{ secrets.TESTPYPI }}  # IMPORTANT: mandatory for trusted publishing
+      id-token: pypi-AgENdGVzdC5weXBpLm9yZwIkYWE4OWY2MDEtNTFkZS00ZDYwLTg0MDgtNmRjODI5MDVhYjcxAAIPWzEsWyJnaGV0b29sIl1dAAIsWzIsWyJkZDVlZDhlMy0wNDFkLTQyNmYtOTk2ZS0xODc0YWVjY2VmOTQiXV0AAAYgn1Y27fjyYPiC8lBaVmyHuJpySEjzwdRLw9i1rKy9AiI  # IMPORTANT: mandatory for trusted publishing
 
     steps:
       - name: Download all the dists
