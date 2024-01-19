@@ -43,9 +43,9 @@ jobs:
       - name: Extract tag name
         id: tag
         run: echo ::set-output name=TAG_NAME::$(echo $GITHUB_REF | cut -d / -f 3)
-          - name: Update version in setup.cfg
-            run: >-
-              sed -i "s/{{VERSION_PLACEHOLDER}}/${{ steps.tag.outputs.TAG_NAME }}/g" setup.cfg
+      - name: Update version in setup.cfg
+        run: >-
+           sed -i "s/{{VERSION_PLACEHOLDER}}/${{ steps.tag.outputs.TAG_NAME }}/g" setup.cfg
 
       - name: Build a binary wheel and a source tarball
         run: python3 -m build
