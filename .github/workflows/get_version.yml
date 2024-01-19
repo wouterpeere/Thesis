@@ -16,3 +16,11 @@ jobs:
         run: |
           echo $RELEASE_VERSION
           echo ${{ steps.vars.outputs.tag }}
+      - name: Update version in version file and commit
+        run: |
+          echo "version: ${{ steps.vars.outputs.tag }}" > versions.txt
+          git add versions.txt
+          git commit -m "Update version to ${{ github.event.release.tag_name }}"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
