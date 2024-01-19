@@ -28,7 +28,7 @@ jobs:
           from github import Github
           
           new_version = '2.5.0'
-          file_path = 'path/to/setup.cfg'  # Update with the actual path to your setup.cfg file
+          file_path = 'setup.cfg'  # Update with the actual path to your setup.cfg file
           
           with open(file_path, 'r') as file:
               content = file.read()
