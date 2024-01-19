@@ -18,26 +18,10 @@ jobs:
           python-version: 3.x
 
       - name: Install dependencies
-        run: |
-          pip install PyGithub
+        run: pip install PyGithub
 
       - name: Update version in setup.cfg
-        run: |
-          python -c "
-          import re
-          from github import Github
-          
-          new_version = '2.5.0'
-          file_path = 'setup.cfg'  # Update with the actual path to your setup.cfg file
-          
-          with open(file_path, 'r') as file:
-              content = file.read()
-          
-          updated_content = re.sub(r'version\s*=\s*\d+\.\d+\.\d+', f'version = {new_version}', content)
-          
-          with open(file_path, 'w') as file:
-              file.write(updated_content)
-          "
+        run: python update_version.py
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Install dependencies
