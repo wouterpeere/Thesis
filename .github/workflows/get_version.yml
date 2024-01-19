@@ -16,6 +16,8 @@ jobs:
         run: |
           echo $RELEASE_VERSION
           echo ${{ steps.vars.outputs.tag }}
+      - name: Set up Git
+        run: git config --global user.email "wouter_peere@hotmail.com" && git config --global user.name "GitHub Actions"
       - name: Update version in version file and commit
         run: |
           echo "version: ${{ steps.vars.outputs.tag }}" > versions.txt
