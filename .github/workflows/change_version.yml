@@ -19,7 +19,6 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install -r requirements.txt
           pip install PyGithub
 
       - name: Update version in setup.cfg
@@ -41,4 +40,3 @@ jobs:
                     "
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        if: github.event_name == 'release'
