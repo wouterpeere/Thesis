@@ -4,6 +4,8 @@ on:
   push:
     tags:
       - 'v*.*.*'
+  workflow_dispatch:
+
 permissions:
   contents: write
 
@@ -83,7 +85,7 @@ jobs:
 
     environment:
       name: testpypi
-      url: https://test.pypi.org/p/GHEtool
+      url: https://test.pypi.org/p/experiment-thesis2
 
     steps:
       - name: Download all the dists
