@@ -9,7 +9,7 @@ permissions:
 
 jobs:
   dev-tests:
-    if: "!contains(github.event.release.name, 'dev')"
+    if: "contains(github.event.release.name, 'dev')"
     name: Development tests
     runs-on: ubuntu-latest
     steps:
