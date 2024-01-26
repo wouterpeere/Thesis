@@ -32,7 +32,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          token: ${{ secrets.TOKEN }
+          token: ${{ secrets.TOKEN }}
           persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal access token.
       - name: Set output
         id: vars
