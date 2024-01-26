@@ -45,7 +45,7 @@ jobs:
 
       - name: Check output
         id: split
-        run: echo "STRIPPED_VERSION=${{ github.event.release.name#v }}" >> $GITHUB_ENV
+        run: echo "STRIPPED_VERSION=$(echo ${RELEASE_VERSION} | sed 's/^v//')" >> $GITHUB_ENV
 
       - name: Set up Git
         run: git config --global user.email "${{ secrets.EMAIL }}" && git config --global user.name "GitHub Actions"
