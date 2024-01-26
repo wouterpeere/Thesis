@@ -49,7 +49,7 @@ jobs:
           echo "${{ steps.vars.outputs.release }}" > VERSION.txt
           git add VERSION.txt 
           git commit -am "Release: auto-update version to ${{ steps.vars.outputs.release }}"
-          git push origin HEAD:master
+          #git push origin HEAD:master
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
