@@ -1,4 +1,4 @@
-name: On release new version
+name: CD to pypi
 
 on:
   push:

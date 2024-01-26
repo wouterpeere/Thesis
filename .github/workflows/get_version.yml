@@ -1,4 +1,4 @@
-name: CI test-pypi
+name: On release
 
 on:
   release:
@@ -47,5 +47,7 @@ jobs:
           git add VERSION.txt 
           git commit -am "Release: auto-update version to ${{ steps.vars.outputs.release }}"
           git push origin HEAD:master
-        env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.TOKEN }}
