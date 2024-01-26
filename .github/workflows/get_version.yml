@@ -31,6 +31,8 @@ jobs:
     needs: dev-tests
     steps:
       - uses: actions/checkout@v3
+        with:
+          persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal access token.
       - name: Set output
         id: vars
         run: echo "release=${{ github.event.release.name }}" >> $GITHUB_OUTPUT
