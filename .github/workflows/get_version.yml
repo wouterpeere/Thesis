@@ -43,7 +43,7 @@ jobs:
         run: git config --global user.email "${{ secrets.EMAIL }}" && git config --global user.name "GitHub Actions"
       - name: Update version in version file and commit
         run: |
-          echo "${{ env.RELEASE_VERSION }}" > VERSION.txt
+          echo "${{ $RELEASE_VERSION }}" > VERSION.txt
           git add VERSION.txt 
           git commit -am "Update version to ${{ steps.vars.outputs.release }}"
           git push origin HEAD:master
@@ -77,6 +77,7 @@ jobs:
 
   publish-to-testpypi:
     needs: build
+    if: ${{  }}
     name: Publish Python 🐍 distribution 📦 to TestPyPI
     runs-on: ubuntu-latest
 
