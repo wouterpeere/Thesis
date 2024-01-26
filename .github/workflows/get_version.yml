@@ -18,6 +18,8 @@ jobs:
         with:
           python-version: '3.12'
       - name: Install dependencies
+        if: contains("${{ github.event.release.name }}", 'dev')
+
         run: |
           python -m pip install --upgrade pip
           pip install -e .
