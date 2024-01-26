@@ -41,11 +41,11 @@ jobs:
 
       - name: Set output
         id: vars
-        run: echo "release=${{ github.event.release.name }}" >> $GITHUB_OUTPUT
+        run: echo "RELEASE_VERSION=${{ github.event.release.name }}" >> $GITHUB_ENV
 
       - name: Check output
         id: split
-        run: echo "STRIPPED_VERSION=$(echo ${RELEASE_VERSION} | sed 's/^v//')" >> $GITHUB_ENV
+        run: echo "STRIPPED_VERSION=${RELEASE_VERSION#v}" >> $GITHUB_ENV
 
       - name: Set up Git
         run: git config --global user.email "${{ secrets.EMAIL }}" && git config --global user.name "GitHub Actions"
@@ -53,6 +53,7 @@ jobs:
       - name: Update version in version file and commit
         run: |
           echo "${STRIPPED_VERSION}" > VERSION.txt
+          cat VERSION.txt
           git add VERSION.txt 
           git commit -am "Release: auto-update version to ${RELEASE_VERSION}"
 
