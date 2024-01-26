@@ -29,27 +29,33 @@ jobs:
     name: Set tag
     runs-on: ubuntu-latest
     needs: dev-tests
+    env:
+      RELEASE_VERSION: ""
+      STRIPPED_VERSION: ""
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
         with:
           token: ${{ secrets.TOKEN }}
-          persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal access token.
+          persist-credentials: false
+
       - name: Set output
         id: vars
         run: echo "release=${{ github.event.release.name }}" >> $GITHUB_OUTPUT
+
       - name: Check output
-        env:
-          RELEASE_VERSION: ${{ steps.vars.outputs.release }}
         id: split
-        run: echo "::set-output name=withoutv::${RELEASE_VERSION#v}"
+        run: echo "::set-env name=STRIPPED_VERSION::${{ steps.vars.outputs.release#v }}"
+
       - name: Set up Git
         run: git config --global user.email "${{ secrets.EMAIL }}" && git config --global user.name "GitHub Actions"
+
       - name: Update version in version file and commit
         run: |
-          echo "${{ steps.id.outputs.withoutv }}" > VERSION.txt
+          echo "${STRIPPED_VERSION}" > VERSION.txt
           git add VERSION.txt 
-          git commit -am "Release: auto-update version to ${{ steps.vars.outputs.release }}"
-          #git push origin HEAD:master
+          git commit -am "Release: auto-update version to ${RELEASE_VERSION}"
+
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
