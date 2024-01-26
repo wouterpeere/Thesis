@@ -1,10 +1,8 @@
 name: On release
 
 on:
-  push:
-    # Pattern matched against refs/tags
-    tags:
-      - 'v[0-9]+(\.[0-9]+)*([-\.]\S+)?'
+  release:
+    types: [ published ]
 
 permissions:
   contents: write
@@ -38,7 +36,7 @@ jobs:
           persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal access token.
       - name: Set output
         id: vars
-        run: echo "release=${{ github.event.ref }}" >> $GITHUB_OUTPUT
+        run: echo "release=${{ github.event.release.name }}" >> $GITHUB_OUTPUT
       - name: Check output
         env:
           RELEASE_VERSION: ${{ steps.vars.outputs.release }}
