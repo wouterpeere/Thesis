@@ -25,12 +25,6 @@ jobs:
       - name: Test with pytest
         run: pytest test.py
 
-  name: On release
-
-  on:
-    release:
-      types: [ published, unpublished ]
-
   create-tag:
     name: Set tag
     needs: dev-tests
