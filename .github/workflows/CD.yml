@@ -60,7 +60,7 @@ jobs:
 
     environment:
       name: pypi
-      url: https://pypi.org/p/experiment-thesis2
+      url: https://pypi.org/p/thesis-experiment-test
 
     steps:
       - name: Download all the dists
